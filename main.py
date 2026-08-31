@@ -30,7 +30,13 @@ def scrape_borrowings(session: Session) -> list[dict]:
     soup = BeautifulSoup(response.text, 'html.parser')
 
     borrowing_table = soup.find(id='emprestimos')
+    if borrowing_table is None:
+        return []
+
     borrowing_body = borrowing_table.find('tbody')
+    if borrowing_body is None:
+        return []
+
     borrowing_rows = borrowing_body.find_all('tr')
 
     borrowings = []
